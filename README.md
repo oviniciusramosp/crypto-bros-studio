@@ -33,13 +33,35 @@ in the OS keychain (`flutter_secure_storage`).
 After publishing, the app (with `useStaticFeed: true`) shows the post — the full
 loop: **write here → GitHub → app reads it**.
 
-## Status / caveats
+## Building on Flutter 3.44+ (important)
 
-This is a v0.1 scaffold authored without a local Flutter toolchain to compile it,
-so expect to run `flutter pub get` and possibly make small adjustments for the
-pinned `appflowy_editor` ^6.2.0 API (the custom-block API has shifted across
-versions — see `lib/chart_block.dart`). Known follow-ups:
-- Slash-menu wiring for the chart item (the toolbar button is the reliable path).
+`appflowy_editor` 6.2.0 (latest on pub) — and even its `main` — does **not yet
+support Flutter 3.44**, which added `TextInputClient.onFocusReceived`. A clean
+`flutter build` fails with *"DeltaTextInputService is missing onFocusReceived"*.
+Two fixes:
+
+1. **Pin Flutter (recommended, reproducible)** — use a version `appflowy_editor`
+   supports (≤ 3.3x) via [FVM](https://fvm.app):
+   ```bash
+   dart pub global activate fvm && fvm install 3.32.0 && fvm use 3.32.0
+   fvm flutter run -d macos
+   ```
+2. **One-line shim (quick demo)** — add to `DeltaTextInputService` in the cached
+   package (`~/.pub-cache/.../appflowy_editor/.../ime/delta_input_service.dart`):
+   ```dart
+   @override
+   bool onFocusReceived() => false;
+   ```
+   (Not reproducible — lost on `pub cache repair`. Used to verify v0.1 runs.)
+
+**Verified**: with the shim, `flutter build macos` succeeds and the app launches
+clean (no runtime exceptions) on Flutter 3.44.4.
+
+## Status / follow-ups
+
+v0.1 — editor + chart block + live preview + GitHub publish all compile and run.
+Next:
+- Slash-menu wiring for the chart item (the toolbar button is the reliable path today).
 - Rich title editing and image upload/re-hosting on publish (today: cover via URL).
 - Inter font bundling for exact typography parity (`lib/tokens.dart`).
 

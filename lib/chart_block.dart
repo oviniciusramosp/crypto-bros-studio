@@ -1,5 +1,6 @@
 import 'package:appflowy_editor/appflowy_editor.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'tokens.dart';
 
 /// Custom "chart" block — the headline reason for the Studio. Instead of typing
@@ -40,7 +41,7 @@ Map<String, dynamic> chartParamsFromNode(Node node) {
 
 /// Slash-menu item that inserts a chart block.
 SelectionMenuItem chartMenuItem = SelectionMenuItem(
-  name: 'Chart',
+  getName: () => 'Chart',
   icon: (editorState, isSelected, style) => Icon(
     Icons.show_chart,
     color: isSelected ? AppTokens.bitcoinOrange : AppTokens.textSecondary,
@@ -76,9 +77,6 @@ class ChartBlockComponentBuilder extends BlockComponentBuilder {
           actionBuilder(blockComponentContext, state),
     );
   }
-
-  @override
-  bool validate(Node node) => node.attributes['asset'] is String;
 }
 
 class ChartBlockWidget extends BlockComponentStatefulWidget {

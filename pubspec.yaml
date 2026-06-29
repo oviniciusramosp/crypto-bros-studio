@@ -11,6 +11,7 @@ dependencies:
     sdk: flutter
   # Pinned: the custom-block API evolved across versions (NodeWidgetBuilder → BlockComponentBuilder).
   appflowy_editor: ^6.2.0
+  provider: ^6.1.0
   http: ^1.2.0
   flutter_secure_storage: ^9.2.2
 
