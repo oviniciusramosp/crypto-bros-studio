@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:appflowy_editor/appflowy_editor.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'chart_block.dart';
 import 'lean.dart';
 import 'preview.dart';
@@ -20,7 +21,7 @@ class StudioApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorSchemeSeed: AppTokens.bitcoinOrange,
-        fontFamily: AppTokens.fontFamily,
+        textTheme: GoogleFonts.interTextTheme(),
       ),
       home: const EditorScreen(),
     );
@@ -98,36 +99,16 @@ class _EditorScreenState extends State<EditorScreen> {
                 editorState: editorState,
                 blockComponentBuilders: builders,
                 editorStyle: EditorStyle.desktop(
-                  textStyleConfiguration: const TextStyleConfiguration(
-                    text: TextStyle(
-                        fontSize: 15,
-                        fontFamily: AppTokens.fontFamily,
-                        color: AppTokens.textPrimary),
+                  textStyleConfiguration: TextStyleConfiguration(
+                    text: GoogleFonts.inter(fontSize: 15, color: AppTokens.textPrimary),
                   ),
                 ),
               ),
             ),
           ),
           const VerticalDivider(width: 1),
-          // Live preview (app-styled)
-          Expanded(
-            child: Container(
-              color: const Color(0xFFFAFAFA),
-              child: Column(
-                children: [
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(AppTokens.sm),
-                    color: AppTokens.backgroundTertiary,
-                    child: const Text('Preview (app)',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600, color: AppTokens.textSecondary)),
-                  ),
-                  Expanded(child: LeanPreview(blocks: _preview)),
-                ],
-              ),
-            ),
-          ),
+          // Live 1:1 preview (app tokens, iPhone frame)
+          Expanded(child: LeanPreview(blocks: _preview)),
         ],
       ),
     );
