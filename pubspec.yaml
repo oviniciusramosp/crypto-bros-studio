@@ -1,0 +1,21 @@
+name: crypto_bros_studio
+description: Crypto Bros Studio — write posts with custom blocks (charts) and publish the app-native content format to GitHub.
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ">=3.4.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # Pinned: the custom-block API evolved across versions (NodeWidgetBuilder → BlockComponentBuilder).
+  appflowy_editor: ^6.2.0
+  http: ^1.2.0
+  flutter_secure_storage: ^9.2.2
+
+dev_dependencies:
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
